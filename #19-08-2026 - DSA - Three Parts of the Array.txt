@@ -1,0 +1,14 @@
+#Three Parts of the Array
+
+n = int(input())
+a = list(map(int, input().split()))
+
+o = 0
+for i in range(n + 1):
+    s1 = sum(a[:i])
+    for j in range(i, n + 1):
+        s3 = sum(a[j:])
+
+        if s1 == s3:
+            o = max(o, s1)
+print(o)
