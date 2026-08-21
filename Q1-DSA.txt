@@ -1,0 +1,16 @@
+n = int(input())
+h = list(map(int, input().split()))
+
+def f(i):
+    if i == 0:
+        return 0
+
+    fir = f(i - 1) + abs(h[i] - h[i - 1])
+
+    two = float('inf')
+    if i >= 2:
+        sec = f(i - 2) + abs(h[i] - h[i - 2])
+
+    return min(fir, sec)
+
+print(f(n - 1))
