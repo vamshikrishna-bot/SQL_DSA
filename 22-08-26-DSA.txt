@@ -1,0 +1,128 @@
+1)Target Sum
+   def TargetSum(self, nums, target):
+        def dfs(i, s):
+            if i == len(nums):
+                return 1 if s == target else 0
+
+            return dfs(i + 1, s + nums[i]) + dfs(i + 1, s - nums[i])
+
+        return dfs(0, 0)
+
+2)Partition Equal Subset Sum
+   def Partition(self, nums) :
+        total = sum(nums)
+
+        if total % 2:
+            return False
+
+        target = total // 2
+
+        def dfs(i, s):
+            if s == target:
+                return True
+            if i == len(nums) or s > target:
+                return False
+
+            return dfs(i + 1, s + nums[i]) or dfs(i + 1, s)
+
+        return dfs(0, 0)
+
+
+3)Last Stone Weight 
+  def lastStone(self, stones: List[int]) -> int:
+        ans = float("inf")
+
+        def dfs(i, a, b):
+            nonlocal ans
+
+            if i == len(stones):
+                ans = min(ans, abs(a - b))
+                return
+
+            dfs(i + 1, a + stones[i], b)
+            dfs(i + 1, a, b + stones[i])
+
+        dfs(0, 0, 0)
+        return ans
+
+4)Vacations
+n = int(input())
+a = list(map(int, input().split()))
+
+def dfs(i, last):
+    if i == n:
+        return 0
+
+    ans = 1 + dfs(i + 1, 0)
+
+    if a[i] in [1, 3] and last != 1:
+        ans = min(ans, dfs(i + 1, 1))
+
+    if a[i] in [2, 3] and last != 2:
+        ans = min(ans, dfs(i + 1, 2))
+
+    return ans
+
+print(dfs(0, 0))
+
+
+5)Petr and a Combination Lock
+n = int(input())
+a = list(map(int, input().split()))
+
+def dfs(i, s):
+    if i == n:
+        return s % 360 == 0
+
+    return dfs(i + 1, s + a[i]) or dfs(i + 1, s - a[i])
+
+print("YES" if dfs(0, 0) else "NO")
+
+
+6)Basketball Exercise
+n = int(input())
+top = list(map(int, input().split()))
+bottom = list(map(int, input().split()))
+
+def dfs(col, prev):
+    if col == n:
+        return 0
+
+    ans = dfs(col + 1, 0)
+
+    if prev != 1:
+        ans = max(ans, top[col] + dfs(col + 1, 1))
+
+    if prev != 2:
+        ans = max(ans, bottom[col] + dfs(col + 1, 2))
+
+    return ans
+
+print(dfs(0, 0))
+
+
+
+7)Boredom
+n = int(input())
+nums = list(map(int, input().split()))
+
+def dfs(arr):
+    if not arr:
+        return 0
+
+    ans = 0
+
+    for i in range(len(arr)):
+        x = arr[i]
+        temp = []
+
+        for y in arr:
+            if y != x and y != x - 1 and y != x + 1:
+                temp.append(y)
+
+        ans = max(ans, x + dfs(temp))
+
+    return ans
+
+print(dfs(nums))
+
