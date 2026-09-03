@@ -1,0 +1,55 @@
+1)Check if a Binary Tree is BST
+ def isBST(root, low=float("-inf"), high=float("inf")):
+    if root is None:
+        return True
+
+    if root.val <= low or root.val >= high:
+        return False
+
+    return (isBST(root.left, low, root.val) and
+            isBST(root.right, root.val, high))
+
+2)Find kth Smallest and kth Largest in BST
+a)def kthSmallest(root, k):
+    arr = []
+
+    def inorder(node):
+        if node:
+            inorder(node.left)
+            arr.append(node.val)
+            inorder(node.right)
+
+    inorder(root)
+    return arr[k-1]
+
+b)
+ def kthLargest(root, k):
+    arr = []
+
+    def inorder(node):
+        if node:
+            inorder(node.left)
+            arr.append(node.val)
+            inorder(node.right)
+
+    inorder(root)
+    return arr[-k]
+
+3)Check if BST is Balanced
+def isBalanced(root):
+    def height(node):
+        if node is None:
+            return 0
+
+        left = height(node.left)
+        right = height(node.right)
+
+        if left == -1 or right == -1:
+            return -1
+        if abs(left - right) > 1:
+            return -1
+
+        return max(left, right) + 1
+
+    return height(root) != -1
+
